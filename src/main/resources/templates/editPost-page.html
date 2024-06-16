@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link data-default-icon="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" rel="icon"
+          sizes="192x192" href="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png"/>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+            color: #262626;
+        }
+
+        header {
+            position: fixed;
+            background-color: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            font-family: "Anton", sans-serif;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 320px;
+            background-color: #fff;
+            padding: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+            position: fixed;
+            border-right: 1px solid #dbdbdb;
+        }
+
+        .sidebar a {
+            color: #262626;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        .sidebar a img, svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .sidebar a:hover {
+            background-color: #fafafa;
+            border-radius: 5px;
+        }
+        main {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+            background-color: #fff;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-profile {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .edit-profile form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-profile label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .edit-profile input[type="text"],
+        .edit-profile input[type="tel"],
+        .edit-profile input[type="password"],
+        .edit-profile input[type="email"],
+        .edit-profile select,
+        .edit-profile textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .edit-profile textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .edit-profile .profile-options button {
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .edit-profile .profile-options button:hover {
+            background-color: #0077b6;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid #dbdbdb;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-results p {
+            margin-bottom: 5px;
+        }
+
+        .search-results img {
+            max-width: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        button[type="button"] {
+            display: inline-block;
+            background-color: #0095f6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="button"]:hover {
+            background-color: #0077b6;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <a href="#" th:href="@{/api/main/{userId}(userId=${userId})}"><img
+                src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="Home">Home</a>
+        <a href="#" th:href="@{/search/createSearch/{userId}(userId=${userId})}"><img
+                src="https://cdn-icons-png.flaticon.com/128/54/54481.png" alt="Search">Search</a>
+        <!--        <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/4229/4229877.png" alt="Explore">Explore</a>-->
+        <a href="#" th:href="@{/posts/newPost/{userId}(userId=${userId})}">
+            <svg aria-label="Новая публикация" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24"
+                 role="img" viewBox="0 0 24 24" width="24"><title>Новая публикация</title>
+                <path d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z"
+                      fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"></path>
+                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line>
+                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
+            </svg>
+            New post</a>
+        <a href="#" th:href="@{/home/profUser/{userId}(userId=${userId})}"><img
+                src="https://cdn-icons-png.flaticon.com/128/1144/1144760.png" alt="Profile">Profile</a>
+        <a href="#" th:href="@{/api/page}"><img
+                src="data:image/png;base64,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"
+                alt="Logout">Logout</a>
+    </div>
+    <main>
+        <section class="profile">
+            <div class="edit-profile">
+                <form id="post-form" action="#"
+                      th:action="@{/posts/savePOstAfter/{userId}/{postId}(userId=${userId},postId=${postGetId})}"
+                      th:object="${editPost}" method="post">
+
+                    <!-- Поле для названия поста -->
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" th:field="*{title}" name="title" required minlength="8" maxlength="20"
+                           placeholder="Enter title to Post">
+
+                    <!-- Поле для описания поста -->
+                    <label for="description">Description:</label>
+                    <textarea id="description" th:field="*{description}" name="description" required placeholder="Enter description to Post"></textarea>
+
+                    <!-- Кнопка для отправки формы -->
+                    <button type="submit">Update</button>
+                </form>
+
+            </div>
+        </section>
+    </main>
+</div>
+
+
+<script>
+    document.getElementById('searchInput').addEventListener('input', function () {
+        // Здесь может быть ваша логика поиска, эмулируемая для примера
+        let searchQuery = this.value.toLowerCase();
+        let searchResultsHTML = '';
+
+        // Пример эмулированных результатов поиска
+        const users = [
+            {username: 'user1', photo: 'user1.jpg'},
+            {username: 'user2', photo: 'user2.jpg'},
+            {username: 'user3', photo: 'user3.jpg'}
+        ];
+
+        users.forEach(user => {
+            if (user.username.toLowerCase().includes(searchQuery)) {
+                searchResultsHTML += `<div><img src="${user.photo}" alt="${user.username}"><p>${user.username}</p></div>`;
+            }
+        });
+
+        document.getElementById('searchResults').innerHTML = searchResultsHTML;
+
+        // Показать модальное окно при вводе текста
+        document.getElementById('searchModal').style.display = 'block';
+    });
+
+    // Обработчик закрытия модального окна поиска
+    document.querySelector('.close').addEventListener('click', function () {
+        document.getElementById('searchModal').style.display = 'none';
+    });
+
+</script>
+</body>
+</html>
+
+
+
+
+

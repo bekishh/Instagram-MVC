@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="nrSMEdM_INTzUj4KNn1zvAJIlgsIij9vbwTfOa67FIY"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instagram Clone feito com HTML e CSS"/>
+    <meta name="author" content="Luan Fernando"/>
+    <title>Instagram</title>
+    <link data-default-icon="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" rel="icon"
+          sizes="192x192" href="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png"/>
+</head>
+<style>
+    h1, h2, h3, p, ul {
+        margin: 0;
+    }
+
+    ul {
+        padding: 0;
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: #262626;
+    }
+
+    .container {
+        width: 405px;
+        margin: 15px auto 30px;
+    }
+
+    .logo-instagram {
+        margin: 30px 0 10px 0;
+    }
+
+    .form-login {
+        text-align: center;
+        font-size: 14px;
+        margin-top: 3px;
+    }
+
+    .form-login form {
+        text-align: center;
+        background-color: #fff;
+        padding: 1.25rem 2.5rem;
+        border: 1px solid rgb(219, 219, 219);
+        margin-bottom: 10px;
+    }
+
+    .form-login input {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 0.8rem;
+        padding: 13px 0 13px 8px;
+        border: 1px solid #dbdbdb;
+        margin-bottom: 4px;
+        border-radius: 3px;
+        outline: none;
+    }
+
+    .form-login button {
+        color: #fff;
+        width: 100%;
+        margin-top: 15px;
+        background: #0195f6;
+        border: none;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .form-login button:disabled {
+        background: #B2DFFC;
+        cursor: default;
+    }
+
+    .or {
+        margin: 1rem 0 1.6rem;
+        font-size: 13px;
+        color: #8E8E8E;
+        text-transform: uppercase;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .or::after,
+    .or::before {
+        content: "";
+        width: 105px;
+        height: 1px;
+        background: #dbdbdb;
+    }
+
+    .login-facebook {
+        background-color: #0095f6;
+        color: #FFFFFF;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto 18px;
+        padding: 7px 16px;
+        border-radius: 8px;
+        height: 18px;
+    }
+
+    .login-facebook img {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+    }
+
+    .login-facebook:hover {
+        background-color: #1877F2;
+    }
+
+    .forgot-pass {
+        font-size: 0.8rem;
+        color: #385185;
+    }
+
+    .signup {
+        border: 1px solid #dbdbdb;
+        background-color: #fff;
+        padding: 20px 0;
+        margin: 0 0 20px;
+    }
+
+    .signup a {
+        font-weight: 600;
+        color: #0095f6;
+    }
+
+    .get-app {
+        margin-top: 20px;
+
+    }
+
+    .get-app p {
+        font-size: 0.8rem;
+    }
+
+    .get-app img {
+        margin-top: 20px;
+        width: 135px;
+    }
+
+    .clone-page {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .footer {
+        text-align: center;
+        margin: 0 auto;
+        font-size: 12px;
+        color: #8e8e8e;
+    }
+
+    .footer a {
+        color: #8e8e8e;
+        display: inline-block;
+        margin: 0 0.375rem 0.625rem;
+    }
+
+    .animation-image {
+        transition: opacity 1s ease-in-out;
+    }
+
+    .img-photo {
+        position: relative;
+    }
+
+    .animation-image {
+        transition: opacity 1s ease-in-out;
+        opacity: 0;
+    }
+
+    .visible {
+        opacity: 1;
+    }
+
+    .register-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #737373;
+    }
+
+    .more-details-text {
+        color: #737373;
+        font-size: 12px;
+        font-family: sans-serif;
+    }
+
+    .link-word {
+        color: #00376B;
+    }
+</style>
+<body>
+<main class="container">
+    <section class="form-login">
+        <form th:action="@{/api/save}" th:object="${newUser}" method="POST">
+            <img src="https://i.ibb.co/mzLW1HH/logo.png" class="logo-instagram" alt="Instagram Logo">
+            <p class="register-text">Sign up to see photos and videos from your Friends.</p>
+            <a href="https://www.facebook.com/dialog/oauth?client_id=124024574287414&locale=ru_RU&redirect_uri=https%3A%2F%2Fwww.instagram.com%2Faccounts%2Fsignup%2F&response_type=code%2Cgranted_scopes&scope=email&state=%7B%22fbLoginKey%22%3A%228pj7o810frfo61m2g77c11j8maekzqa931hee84b8m1c9c5xneuy%22%2C%22fbLoginReturnURL%22%3A%22%2Ffxcal%2Fdisclosure%2F%3Fnext%3D%252F%22%7D"
+               class="login-facebook">
+                <img src="https://freepnglogo.com/images/all_img/1713419345White_Facebook_PNG.png"
+                     alt="icon do facebook">Log in with Facebook
+            </a>
+            <div class="or">OR</div>
+            <label>
+                <input type="email" th:field="*{email}" name="email" id="email"
+                       placeholder="Email">
+            </label>
+            <label>
+                <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber"
+                       placeholder="Phone number">
+            </label>
+<!--            <label>-->
+<!--                <input type="text" th:field="${signUpUserInfo.fullName}" name="fullName" id="fullName"-->
+<!--                       placeholder="First and last name">-->
+<!--            </label>-->
+            <label>
+                <input type="text" th:field="*{userName}" name="username" id="username"
+                       placeholder="Username">
+            </label>
+            <label>
+                <input type="password" th:field="*{password}" name="password" id="password"
+                       placeholder="Password">
+            </label>
+            <p class="more-details-text" style="margin-top: 10px">People who use our service may have <br> uploaded your
+                contact information to Instagram. <a
+                        class="link-word"
+                        href="https://www.facebook.com/help/instagram/261704639352628">More details</a></p>
+            <br>
+            <p class="more-details-text">
+                By registering, you agree to our
+                <a class="link-word"
+                   href="https://help.instagram.com/581066165581870/?locale=ru_RU"
+                   target="_blank"> Terms, </a>
+                <br>
+                <a class="link-word"
+                   href="https://www.facebook.com/privacy/policy" rel="nofollow noreferrer">Privacy Policy </a>
+                and
+                <a class="link-word"
+                   href="https://www.instagram.com/legal/cookies/">Cookie Policy</a>
+            </p>
+            <button type="submit" id="loginBtn" disabled>Sign up</button>
+        </form>
+        <section class="signup">
+            <p>Have an account? <a href="/api/page">Sign in.</a></p>
+        </section>
+        <section class="get-app">
+            <p>Install the application.</p>
+            <a href="https://apps.apple.com/us/app/instagram/id389801252?ct=igweb.loginPage.badge&mt=8&pt=428156&vt=lo">
+                <img src="https://i.ibb.co/wghxzfs/apple-button.png" alt="Instagram on App Store">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=ig_mid%3D219F464F-9724-4173-B0EA-69DACE191EAF%26utm_campaign%3DloginPage%26utm_content%3Dlo%26utm_source%3Dinstagramweb%26utm_medium%3Dbadge%26original_referrer%3Dhttps%253A%252F%252Fwww.instagram.com%252Faccounts%252Fedit%252F">
+                <img src="https://i.ibb.co/84XNbGN/googleplay-button.png" alt="Instagram on Google Play">
+            </a>
+        </section>
+    </section>
+</main>
+
+<section class="clone-page">
+    <p>This is a clone of the Instagram page.</p>
+</section>
+
+<footer class="footer">
+    <nav>
+        <a href="#">Peaksoft</a>
+        <a href="#">Information</a>
+        <a href="#">Blog</a>
+        <a href="#">Career</a>
+        <a href="#">Help</a>
+        <a href="#">API</a>
+        <a href="#">Confidentiality</a>
+        <a href="#">Conditions</a>
+        <a href="#">G/L accounts</a>
+        <a href="#">Hashtags</a>
+        <a href="#">Locations</a>
+        <a href="#">Instagram Lite</a>
+        <a href="#">Uploading contacts and non-users</a>
+        <a href="#">Peaksoft Verified</a>
+    </nav>
+</footer>
+</body>
+<script>
+    const emailInput = document.getElementById('email');
+    const phoneNumberInput = document.getElementById('phoneNumber');
+    // const fullNameInput = document.getElementById('fullName');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+
+    function checkInputs() {
+        const emailValue = emailInput.value.trim();
+        const phoneNumberValue = phoneNumberInput.value.trim();
+        // const fullNameValue = fullNameInput.value.trim();
+        const usernameValue = usernameInput.value.trim();
+        const passwordValue = passwordInput.value.trim();
+
+        if (emailValue !== '' && phoneNumberValue !== '' /*&& fullNameValue !== ''*/ && usernameValue !== '' && passwordValue !== '') {
+            loginBtn.removeAttribute('disabled');
+        } else {
+            loginBtn.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    emailInput.addEventListener('input', checkInputs)
+    phoneNumberInput.addEventListener('input', checkInputs);
+    // fullNameInput.addEventListener('input', checkInputs);
+    usernameInput.addEventListener('input', checkInputs);
+    passwordInput.addEventListener('input', checkInputs);
+</script>
+</html>
